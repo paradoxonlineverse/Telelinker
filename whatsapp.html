@@ -1,0 +1,495 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeleLinker - WhatsApp Groups</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    /* Custom animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn { animation: fadeIn 0.6s ease-out forwards; }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Header -->
+  <!-- Header -->
+  <header class="bg-white shadow-md sticky top-0 z-10">
+      <div class="container mx-auto px-4 py-4">
+          <div class="flex justify-between items-center">
+              <div class="flex items-center cursor-pointer" onclick="window.location.href='index.html'">
+                  <img src="Assets/images/logo.png" alt="TeleLinker Logo" class="h-8 w-8 rounded-full object-cover mr-2 border-2 border-green-500">
+                  <h1 class="text-2xl font-bold text-green-500">TeleLinker</h1>
+              </div>
+              <nav>
+                  <button class="md:hidden text-gray-600 hover:text-blue-500 focus:outline-none" onclick="toggleMenu()">
+                      <i class="fas fa-bars text-xl"></i>
+                  </button>
+                  <ul id="mobileMenu" class="hidden md:flex md:space-x-6 absolute md:relative left-0 right-0 md:left-auto md:right-auto bg-white md:bg-transparent top-16 md:top-auto p-4 md:p-0 shadow-md md:shadow-none">
+                      <li class="mb-2 md:mb-0"><a href="index.html" class="text-gray-600 hover:text-blue-500 transition block md:inline">Home</a></li>
+                      <li class="mb-2 md:mb-0"><a href="telegram.html" class="text-gray-600 hover:text-blue-500 transition block md:inline">Telegram Groups</a></li>
+                      <li><a href="whatsapp.html" class="text-green-500 font-semibold block md:inline">WhatsApp Groups</a></li>
+                  </ul>
+              </nav>
+          </div>
+      </div>
+  </header>
+
+  <!-- Hero Section -->
+<section class="bg-gradient-to-r from-green-600 to-green-400 text-white py-20">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-4xl md:text-5xl font-bold mb-4 animate-fadeIn">Join Our WhatsApp Communities</h2>
+  </div>
+</section>
+
+  <!-- WhatsApp Groups Section -->
+  <section class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+        <!-- WhatsApp Group 1 -->
+        <div onclick="window.open('https://chat.whatsapp.com/invite/JeWGCuiEAX2HPfl7OUU4aI', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM22.jpeg" alt="iසරාගි තොල" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">සරාගි තොල🥵🔞</h3>
+          </div>
+          <a href="https://chat.whatsapp.com/invite/JeWGCuiEAX2HPfl7OUU4aI" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 2 -->
+        <div onclick="window.open('https://chat.whatsapp.com/invite/DUDKGgh2HcTHX7f40sfrcW', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM23.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">හො ර පූ සී _ 🔞</h3>
+          </div>
+          <a href="https://chat.whatsapp.com/invite/DUDKGgh2HcTHX7f40sfrcW" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 3 -->
+        <div onclick="window.open('https://chat.whatsapp.com/invite/LxMEnWtleBGImOhYmumMkM', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM24.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">අක්කිගෙ පෑන්ටිය 5 🥵🔞</h3>
+          </div>
+          <a href="https://chat.whatsapp.com/invite/LxMEnWtleBGImOhYmumMkM" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 5 -->
+        <div onclick="window.open('https://chat.whatsapp.com/invite/BbbqaV5XUXJGxdYcSdgZs0', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM25.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">වල්මත් වෙන්න කෙල්ලෙක් එන්න</h3>
+          </div>
+          <a href="https://chat.whatsapp.com/invite/BbbqaV5XUXJGxdYcSdgZs0" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 6 -->
+        <div onclick="window.open('https://chat.whatsapp.com/invite/Gu6RjM4u1ZVAuAcIcgFvkI', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM26.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">කෙල්ලො එන්න</h3>
+          </div>
+          <a href="https://chat.whatsapp.com/invite/Gu6RjM4u1ZVAuAcIcgFvkI" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 7 -->
+        <div onclick="window.open('https://chat.whatsapp.com/invite/KJ2ZboIizxr6ggP2PLAwpT', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM27.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">Girls</h3>
+          </div>
+          <a href="https://chat.whatsapp.com/invite/KJ2ZboIizxr6ggP2PLAwpT" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 8 -->
+        <div onclick="window.open('https://chat.whatsapp.com/invite/J6CUpdpoStD9yzfLHHnbIu', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM28.jpeg
+              " alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">අහින්සකාවී 🔥</h3>
+          </div>
+          <a href="https://chat.whatsapp.com/invite/J6CUpdpoStD9yzfLHHnbIu" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 9 -->
+        <div onclick="window.open('https://chat.whatsapp.com/invite/JYS9cpo4g5N1JhkdJbBLTI', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM29.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">Keri veasa kello👅👄</h3>
+          </div>
+          <a href="https://chat.whatsapp.com/invite/JYS9cpo4g5N1JhkdJbBLTI" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 10 -->
+        <div onclick="window.open('https://chat.whatsapp.com/invite/IiMLoFRS40CHZhcDcDrXhX', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM30.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">දේශීය වැල👅👙</h3>
+          </div>
+          <a href="https://chat.whatsapp.com/invite/IiMLoFRS40CHZhcDcDrXhX" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 11 -->
+        <div onclick="window.open('https://chat.whatsapp.com/invite/GBrfq5xVjaj7a56Dq7JCTr', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM31.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">නිලියන්ගෙ ඒව</h3>
+          </div>
+          <a href="https://chat.whatsapp.com/invite/GBrfq5xVjaj7a56Dq7JCTr" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 12 -->
+        <div onclick="window.open('https://www.profitableratecpm.com/ajqs5fzi?key=adbd36d38a6fc78f1e79bc8d4337da61', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM32.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">තොල්පෙති 💋</h3>
+          </div>
+          <a href="https://www.profitableratecpm.com/ajqs5fzi?key=adbd36d38a6fc78f1e79bc8d4337da61" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 13 -->
+        <div onclick="window.open('https://otieu.com/4/9345331', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM33.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">වැල පමණයි 🍑</h3>
+          </div>
+          <a href="https://otieu.com/4/9345331" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 14 -->
+        <div onclick="window.open('https://www.profitableratecpm.com/ajqs5fzi?key=adbd36d38a6fc78f1e79bc8d4337da61', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM34.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">පුසී කෙල්ලො 😽🔥</h3>
+          </div>
+          <a href="https://www.profitableratecpm.com/ajqs5fzi?key=adbd36d38a6fc78f1e79bc8d4337da61" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 15 -->
+        <div onclick="window.open('https://otieu.com/4/9345331', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM35.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">සැප කදන් 😈💦</h3>
+          </div>
+          <a href="https://otieu.com/4/9345331" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 16 -->
+        <div onclick="window.open('https://www.profitableratecpm.com/ajqs5fzi?key=adbd36d38a6fc78f1e79bc8d4337da61', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM36.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">නිළියන්ගෙ ඒවා 🎥👠</h3>
+          </div>
+          <a href="https://www.profitableratecpm.com/ajqs5fzi?key=adbd36d38a6fc78f1e79bc8d4337da61" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 17 -->
+        <div onclick="window.open('https://otieu.com/4/9345331', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM37.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">වැල රාජධානිය 👑🍒</h3>
+          </div>
+          <a href="https://otieu.com/4/9345331" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 18 -->
+        <div onclick="window.open('https://www.profitableratecpm.com/ajqs5fzi?key=adbd36d38a6fc78f1e79bc8d4337da61', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM38.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">පාරාදීසේ 2 🌴🍷</h3>
+          </div>
+          <a href="https://www.profitableratecpm.com/ajqs5fzi?key=adbd36d38a6fc78f1e79bc8d4337da61" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 19 -->
+        <div onclick="window.open('https://otieu.com/4/9345331', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM39.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">සුදු වස්තු 🕊️💫</h3>
+          </div>
+          <a href="https://otieu.com/4/9345331" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 20 -->
+        <div onclick="window.open('https://www.profitableratecpm.com/ajqs5fzi?key=adbd36d38a6fc78f1e79bc8d4337da61', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM40.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">වැල කෙල්ලෝ 3.0 🍑📱</h3>
+          </div>
+          <a href="https://www.profitableratecpm.com/ajqs5fzi?key=adbd36d38a6fc78f1e79bc8d4337da61" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- WhatsApp Group 21 -->
+        <div onclick="window.open('https://otieu.com/4/9345331', '_blank')" class="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-green-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-green-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM41.jpeg" alt="Fitness Fanatics" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-green-500 rounded-full p-1 transition-all duration-300 group-hover:bg-green-600 group-hover:scale-110">
+              <i class="fab fa-whatsapp text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">රහසේ රසකතා 🤫💋</h3>
+          </div>
+          <a href="https://otieu.com/4/9345331" target="_blank"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-4 text-center">
+      <p class="mb-4">© 2025 TeleLinker. All rights reserved.</p>
+      <div class="flex justify-center space-x-4">
+        <a href="telegram.html" class="hover:text-blue-400 transition">
+          <i class="fab fa-telegram-plane text-2xl"></i>
+        </a>
+        <a href="whatsapp.html" class="hover:text-green-400 transition">
+          <i class="fab fa-whatsapp text-2xl"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Add animation on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fadeIn');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate-fadeIn').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
+
+<script>
+    // Add this JavaScript function at the end of your body tag
+    function toggleMenu() {
+        const menu = document.getElementById('mobileMenu');
+        menu.classList.toggle('hidden');
+    }
+</script>

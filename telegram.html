@@ -1,0 +1,540 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeleLinker - Telegram Groups</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    @font-face {
+      font-family: 'FM Ganganee';
+      src: url('fonts/FM-Ganganee.TTF') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    /* Custom animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn { animation: fadeIn 0.6s ease-out forwards; }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Header -->
+  <header class="bg-white shadow-md sticky top-0 z-10">
+      <div class="container mx-auto px-4 py-4">
+          <div class="flex justify-between items-center">
+              <div class="flex items-center cursor-pointer" onclick="window.location.href='index.html'">
+                  <img src="Assets/images/logo.png" alt="TeleLinker Logo" class="h-8 w-8 rounded-full object-cover mr-2 border-2 border-blue-500">
+                  <h1 class="text-2xl font-bold text-blue-500">TeleLinker</h1>
+              </div>
+            <nav>
+                <button class="md:hidden text-gray-600 hover:text-blue-500 focus:outline-none" onclick="toggleMenu()">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <ul id="mobileMenu" class="hidden md:flex md:space-x-6 absolute md:relative left-0 right-0 md:left-auto md:right-auto bg-white md:bg-transparent top-16 md:top-auto p-4 md:p-0 shadow-md md:shadow-none">
+                    <li class="mb-2 md:mb-0"><a href="index.html" class="text-gray-600 hover:text-blue-500 transition block md:inline">Home</a></li>
+                    <li class="mb-2 md:mb-0"><a href="telegram.html" class="text-blue-500 font-semibold block md:inline">Telegram Groups</a></li>
+                    <li><a href="whatsapp.html" class="text-gray-600 hover:text-blue-500 transition block md:inline">WhatsApp Groups</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-blue-600 to-blue-400 text-white py-20">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 animate-fadeIn">Join Our Telegram Communities</h2>
+
+    </div>
+  </section>
+
+  <!-- Telegram Groups Section -->
+  <section class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+        <!-- Telegram Group 1 -->
+        <div onclick="window.open('https://t.me/SLauntiesonly', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM1.jpeg" alt="wekaá,d ú;rhs" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">wekaá,d ú;rhs</h3>
+          </div>
+          <a href="https://t.me/SLauntiesonly" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 2 -->
+        <div onclick="window.open('https://t.me/walasamithiya12', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer" style="animation-delay: 0.1s;">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM2.jpeg" alt="je, iñ;sh" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">je, iñ;sh 🍑🍒</h3>
+          </div>
+          <a href="https://t.me/walasamithiya12" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 3 -->
+        <div onclick="window.open('https://t.me/thatswashttpsxxxhot', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer" style="animation-delay: 0.2s;">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM3.jpeg" alt="w¨;a je, 🔞" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">w¨;a je, 🔞</h3>
+          </div>
+          <a href="https://t.me/thatswashttpsxxxhot" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 4 -->
+        <div onclick="window.open('https://t.me/+jStB54J3-p83NjI1', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer" style="animation-delay: 0.3s;">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM4.jpeg" alt="ldu /ðk" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">ldu /ðk 🌸🧝‍♀🇱🇰🛐</h3>
+          </div>
+          <a href="https://t.me/+jStB54J3-p83NjI1" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- Telegram Group 5 -->
+        <div onclick="window.open('https://t.me/dayakasabawa1', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM5.jpeg" alt="odhliNdj" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">odhliNdj 🙏</h3>
+          </div>
+          <a href="https://t.me/dayakasabawa1" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 7 -->
+        <div onclick="window.open('https://t.me/WELA_Official', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM6.jpeg" alt="je,hd" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">je,hd 🍆</h3>
+          </div>
+          <a href="https://t.me/WELA_Official" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 8 -->
+        <div onclick="window.open('https://t.me/Wel_poll', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM8.jpeg" alt="w;ag%elagrh" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">w;ag%elagrh 💦</h3>
+          </div>
+          <a href="https://t.me/Wel_poll" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 9 -->
+        <div onclick="window.open('https://t.me/joinchat/Hfqm9-aqBv8zOTU1', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM9.jpeg" alt="Naughty Hub" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'Poppins'">Naughty Hub 18+💋</h3>
+          </div>
+          <a href="https://t.me/joinchat/Hfqm9-aqBv8zOTU1" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 10 -->
+        <div onclick="window.open('https://t.me/+6TrrppeS9bVjOTk9p', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM10.jpeg" alt="nysrj wvúh" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">nysrj wvúh 👻</h3>
+          </div>
+          <a href="https://t.me/+6TrrppeS9bVjOTk9p" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 11 -->
+        <div onclick="window.open('https://t.me/+QrubYwLEJZUyNzM1', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM11.jpeg" alt="le.¨ <ñiaisfhda" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">le.¨ <ñiaisfhda 🥵</h3>
+          </div>
+          <a href="https://t.me/+QrubYwLEJZUyNzM1" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 12 -->
+        <div onclick="window.open('https://t.me/SilkAsapuwa2', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM12.jpeg" alt="ks,s is,ala wimqj" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">ks,s is,ala wimqj 🥵🍑</h3>
+          </div>
+          <a href="https://t.me/SilkAsapuwa2" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 13 -->
+        <div onclick="window.open('https://t.me/mahaagedara', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM13.jpeg" alt="uy f.or" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">uy f.or 🍑 💦</h3>
+          </div>
+          <a href="https://t.me/mahaagedara" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 14 -->
+        <div onclick="window.open('https://t.me/+HqYQf3t1oVw4ZTg1', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM14.jpeg" alt=";=ka ux ykaÈh" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">;=ka ux ykaÈh 💦</h3>
+          </div>
+          <a href="https://t.me/+HqYQf3t1oVw4ZTg1" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 15 -->
+        <div onclick="window.open('https://t.me/linkexport', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM15.jpeg" alt="je, l;d f,dalh" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">je, l;d f,dalh 🤫</h3>
+          </div>
+          <a href="https://t.me/linkexport" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 16 -->
+        <div onclick="window.open('https://t.me/Sinhalawala19', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM16.jpeg" alt="isxy, je," class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">isxy, je, 🥵</h3>
+          </div>
+          <a href="https://t.me/Sinhalawala19" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 17 -->
+        <div onclick="window.open('https://t.me/funlokefilm1', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM17.jpeg" alt="je, fjí iSßia" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">je, fjí iSßia 👅 🍆</h3>
+          </div>
+          <a href="https://t.me/funlokefilm1" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 18 -->
+        <div onclick="window.open('https://t.me/joinchat/Fq1x-PgKAhk5OThl', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM18.jpeg" alt="kdÍfoyh" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">kdÍfoyh ♨️</h3>
+          </div>
+          <a href="https://t.me/joinchat/Fq1x-PgKAhk5OThl" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 19 -->
+        <div onclick="window.open('https://otieu.com/4/9345331', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM19.jpeg" alt="Telegram Group 19" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">úhm;a nUrd 👨‍🦳💦🌟</h3>
+          </div>
+          <a href="https://otieu.com/4/9345331" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+
+        <!-- Telegram Group 20 -->
+        <div onclick="window.open('https://t.me/koreagirlsandladyboys', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM20.jpeg" alt="Telegram Group 20" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">l=mdä ,ka;h 👉 👌</h3>
+          </div>
+          <a href="https://t.me/koreagirlsandladyboys" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <!-- Telegram Group 21 -->
+        <div onclick="window.open('https://www.profitableratecpm.com/ajqs5fzi?key=adbd36d38a6fc78f1e79bc8d4337da61', '_blank')" class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 flex flex-col items-center animate-fadeIn group cursor-pointer">
+          <div class="flex items-center justify-center mb-4 relative">
+            <div class="w-32 h-32 rounded-full border-2 border-blue-500 overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-600 group-hover:shadow-lg">
+              <img src="Assets/images/IM21.jpeg" alt="Telegram Group 20" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+            </div>
+            <div class="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 transition-all duration-300 group-hover:bg-blue-600 group-hover:scale-110">
+              <i class="fab fa-telegram-plane text-white text-sm"></i>
+            </div>
+          </div>
+          
+          <div class="text-center transition-all duration-300">
+            <h3 class="text-xl font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300" style="font-family: 'FM Ganganee'">je,a ú;ruhs👌</h3>
+          </div>
+          <a href="https://www.profitableratecpm.com/ajqs5fzi?key=adbd36d38a6fc78f1e79bc8d4337da61" target="_blank"
+             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 w-full text-center mt-4 transform group-hover:shadow-lg group-hover:scale-105">
+            Join Now
+          </a>
+        </div>
+        <script>
+            function toggleMenu() {
+                const menu = document.getElementById('mobileMenu');
+                menu.classList.toggle('hidden');
+            }
+        
+            function handleRedirect(telegramLink) {
+                // Prevent the default link behavior
+                event.preventDefault();
+                
+                // First redirect to the ad URL
+                window.location.href = 'https://www.profitableratecpm.com/ajqs5fzi?key=adbd36d38a6fc78f1e79bc8d4337da61';
+                
+                // After 5 seconds, redirect to the Telegram group
+                setTimeout(function() {
+                    window.location.href = telegramLink;
+                }, 5000);
+            }
+        </script>
+
+        
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-4 text-center">
+      <p class="mb-4">© 2025 TeleLinker. All rights reserved.</p>
+      <div class="flex justify-center space-x-4">
+        <a href="telegram.html" class="hover:text-blue-400 transition">
+          <i class="fab fa-telegram-plane text-2xl"></i>
+        </a>
+        <a href="whatsapp.html" class="hover:text-green-400 transition">
+          <i class="fab fa-whatsapp text-2xl"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Add animation on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fadeIn');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate-fadeIn').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
+
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById('mobileMenu');
+        menu.classList.toggle('hidden');
+    }
+</script>
